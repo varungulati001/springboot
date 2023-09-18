@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
                     // Build the Docker image
-                    docker.build("docker build -t myrepo .")
+                    sh 'docker build -t myrepo .'
                 }
             }
     }
