@@ -46,7 +46,7 @@ pipeline {
                     sh 'aws eks --region us-east-1 update-kubeconfig --name demo-eks'
                     
                     // Apply Kubernetes manifest files to deploy your application
-                    sh 'kubectl apply -f path/to/your/kubernetes-manifests/'
+                      sh "kubectl apply -f eks-deploy-k8s.yaml"
                 }
             }
         }
