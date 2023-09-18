@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        registry = "211223789150.dkr.ecr.us-east-2.amazonaws.com/my-python-repo"
+        registry = "923770093922.dkr.ecr.us-east-2.amazonaws.com/my-python-repo"
     }
     
     stages {
@@ -24,7 +24,7 @@ pipeline {
          steps {
              script {
                 sh "aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 211223789150.dkr.ecr.us-east-2.amazonaws.com"
-                sh "docker push 211223789150.dkr.ecr.us-east-2.amazonaws.com/my-python-repo"
+                sh "docker push 923770093922.dkr.ecr.us-east-2.amazonaws.com/my-python-repo"
                  
              }
            }   
