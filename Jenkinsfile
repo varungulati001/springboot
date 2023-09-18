@@ -19,19 +19,20 @@ pipeline {
             }
       }
     // Building Docker images
-    stage('Building image') {
-      steps{
-        script {
-          dockerImage = docker.build registry 
-        }
-      }
-    }
+    stage('Build Docker Image') {
+            steps {
+                script {
+                    // Build the Docker image
+                    docker.build("docker build -t myrepo .")
+                }
+            }
    
     // Uploading Docker images into AWS ECR
     stage('Pushing to ECR') {
      steps{  
          script {
                 sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 923770093922.dkr.ecr.us-east-1.amazonaws.com'
+                sh 'docker tag myrepo:latest 923770093922.dkr.ecr.us-east-1.amazonaws.com/myrepo:latest'
                 sh 'docker push 923770093922.dkr.ecr.us-east-1.amazonaws.com/myrepo:latest'
          }
         }
