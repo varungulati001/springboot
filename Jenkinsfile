@@ -26,6 +26,7 @@ pipeline {
                     docker.build("docker build -t myrepo .")
                 }
             }
+    }
    
     // Uploading Docker images into AWS ECR
     stage('Pushing to ECR') {
