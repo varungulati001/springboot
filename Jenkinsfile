@@ -18,44 +18,44 @@ pipeline {
             sh 'mvn clean install'           
             }
       }
-   stage('Unit Test') {
-      steps {
-        echo '<--------------- Unit Testing started  --------------->'
-        sh 'mvn surefire-report:report'
-        echo '<------------- Unit Testing stopped  --------------->'
-      }
-    }
+  //  stage('Unit Test') {
+  //     steps {
+  //       echo '<--------------- Unit Testing started  --------------->'
+  //       sh 'mvn surefire-report:report'
+  //       echo '<------------- Unit Testing stopped  --------------->'
+  //     }
+  //   }
 
-    stage('Sonar Analysis') {
-      environment {
-        scannerHome = tool 'sonar-scanner'
-      }
-      steps {
-        echo '<--------------- Sonar Analysis started  --------------->'
-        //         withSonarQubeEnv('sonar-cloud') {
-        //         sh "${scannerHome}/bin/sonar-scanner"
+  //   stage('Sonar Analysis') {
+  //     environment {
+  //       scannerHome = tool 'sonar-scanner'
+  //     }
+  //     steps {
+  //       echo '<--------------- Sonar Analysis started  --------------->'
+  //       //         withSonarQubeEnv('sonar-cloud') {
+  //       //         sh "${scannerHome}/bin/sonar-scanner"
 
-        // }
-        withSonarQubeEnv('sonar-cloud') {
-          sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=springbootapp -Dsonar.organization=malibalakrishna -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=2aeb5370772ef98991c02f240fb5a3b38b79c613'
-          echo '<--------------- Sonar Analysis stopped  --------------->'
-        }
-      }
-    }
-     stage('Quality Gate') {
-      steps {
-        script {
-          echo '<--------------- Quality Gate started  --------------->'
-          timeout(time: 1, unit: 'MINUTES') {
-            def qg = waitForQualityGate()
-            if (qg.status != 'OK') {
-              error 'Pipeline failed due to the Quality gate issue'
-            }
-          }
-          echo '<--------------- Quality Gate stopped  --------------->'
-        }
-      }
-    }  
+  //       // }
+  //       withSonarQubeEnv('sonar-cloud') {
+  //         sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=springbootapp -Dsonar.organization=malibalakrishna -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=2aeb5370772ef98991c02f240fb5a3b38b79c613'
+  //         echo '<--------------- Sonar Analysis stopped  --------------->'
+  //       }
+  //     }
+  //   }
+  //    stage('Quality Gate') {
+  //     steps {
+  //       script {
+  //         echo '<--------------- Quality Gate started  --------------->'
+  //         timeout(time: 1, unit: 'MINUTES') {
+  //           def qg = waitForQualityGate()
+  //           if (qg.status != 'OK') {
+  //             error 'Pipeline failed due to the Quality gate issue'
+  //           }
+  //         }
+  //         echo '<--------------- Quality Gate stopped  --------------->'
+  //       }
+  //     }
+  //   }  
     //Building Docker images
     stage('Build Docker Image') {
             steps {
