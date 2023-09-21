@@ -28,7 +28,7 @@ pipeline {
 
     stage('Sonar Analysis') {
       environment {
-        scannerHome = tool 'SonarQubeScanner'
+        scannerHome = tool 'sonar-scanner'
       }
       steps {
         echo '<--------------- Sonar Analysis started  --------------->'
@@ -36,7 +36,7 @@ pipeline {
                 //     sh "${scannerHome}/bin/sonar-scanner"
 
         // }
-        withSonarQubeEnv('SonarQubeScanner') {
+        withSonarQubeEnv('sonar-cloud') {
           sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=springboot-app'
           echo '<--------------- Sonar Analysis stopped  --------------->'
         }
