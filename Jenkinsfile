@@ -77,7 +77,7 @@ stage('Upload to Nexus') {
             ],
             credentialsId: 'nexus',
             groupId: 'com.tcs.angularjs',
-            nexusUrl: 'http://18.206.212.197:8081',
+            nexusUrl: '18.206.212.197:8081',
             nexusVersion: '3', // Adjust this to your Nexus version (2 or 3)
             protocol: 'http', // Use 'https' if your Nexus server uses HTTPS
             repository: 'maven3',
