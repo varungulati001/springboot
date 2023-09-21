@@ -32,14 +32,14 @@ pipeline {
       }
       steps {
         echo '<--------------- Sonar Analysis started  --------------->'
-                withSonarQubeEnv('sonar-cloud') {
-                    sh "${scannerHome}/bin/sonar-scanner"
+        //         withSonarQubeEnv('sonar-cloud') {
+        //             // sh "${scannerHome}/bin/sonar-scanner"
 
-        }
-        // withSonarQubeEnv('sonar-cloud') {
-        //   sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=springboot-app'
-        //   echo '<--------------- Sonar Analysis stopped  --------------->'
         // }
+        withSonarQubeEnv('sonar-cloud') {
+          sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=springboot-app'
+          echo '<--------------- Sonar Analysis stopped  --------------->'
+        }
       }
     }
     // Building Docker images
