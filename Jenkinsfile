@@ -32,7 +32,7 @@ pipeline {
       }
       steps {
         echo '<--------------- Sonar Analysis started  --------------->'
-                withSonarQubeEnv('SonarServer') {
+                withSonarQubeEnv('sonar-cloud') {
                     sh "${scannerHome}/bin/sonar-scanner"
 
         }
