@@ -56,15 +56,15 @@ pipeline {
         }
       }
     }  
-    // Building Docker images
-    // stage('Build Docker Image') {
-    //         steps {
-    //             script {
-    //                 // Build the Docker image
-    //                 sh 'docker build -t myrepo .'
-    //             }
-    //         }
-    // }
+    Building Docker images
+    stage('Build Docker Image') {
+            steps {
+                script {
+                    // Build the Docker image
+                    sh 'docker build -t myrepo .'
+                }
+            }
+    }
    
     // // Uploading Docker images into AWS ECR
     // stage('Pushing to ECR') {
