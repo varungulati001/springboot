@@ -65,7 +65,18 @@ pipeline {
                 }
             }
     }
-   
+   stage('Upload to Nexus') {
+      steps {
+        script {
+           echo '<--------------- War Publish Started --------------->'
+          nexusArtifactUploader artifacts: [
+            [artifactId: 'springbootApp', classifier: '', file: 'Springbootapp/target/springbootApp.jar', type: 'jar']
+            ], credentialsId: 'nexus', groupId: 'com.tcs.angularjs', nexusUrl: '18.206.212.197:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven3', version: '1.0'
+            echo '<--------------- War Publish Ended --------------->'  
+          
+        }
+      }
+	}
     // // Uploading Docker images into AWS ECR
     // stage('Pushing to ECR') {
     //  steps{  
