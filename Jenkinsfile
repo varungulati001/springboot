@@ -65,18 +65,36 @@ pipeline {
                 }
             }
     }
-   stage('Upload to Nexus') {
-      steps {
-        script {
-           echo '<--------------- War Publish Started --------------->'
-          nexusArtifactUploader artifacts: [
-            [artifactId: 'springbootApp', classifier: '', file: 'Springbootapp/target/springbootApp.jar', type: 'jar']
-            ], credentialsId: 'nexus', groupId: 'com.tcs.angularjs', nexusUrl: '18.206.212.197:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven3', version: '1.0'
-            echo '<--------------- War Publish Ended --------------->'  
-          
+
+     stage('Publish to Nexus') {
+            steps {
+                script {
+                    def server = Artifactory.server(http://18.206.212.197:8081, nexus)
+                    def uploadSpec = """{
+                        "files": [
+                            {
+                                "pattern": "Springbootapp/target/springbootApp.jar",
+                                "target": "maven3/com.tcs.angularjs/springbootApp/1.0/springbootApp.jar"
+                            }
+                        ]
+                    }"""
+                    server.upload(uploadSpec)
+                }
+            }
         }
-      }
-	}
+
+  //  stage('Upload to Nexus') {
+  //     steps {
+  //       script {
+  //          echo '<--------------- War Publish Started --------------->'
+  //         nexusArtifactUploader artifacts: [
+  //           [artifactId: 'springbootApp', classifier: '', file: 'Springbootapp/target/springbootApp.jar', type: 'jar']
+  //           ], credentialsId: 'nexus', groupId: 'com.tcs.angularjs', nexusUrl: '18.206.212.197:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven3', version: '1.0'
+  //           echo '<--------------- War Publish Ended --------------->'  
+          
+  //       }
+  //     }
+	// }
     // // Uploading Docker images into AWS ECR
     // stage('Pushing to ECR') {
     //  steps{  
