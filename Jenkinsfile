@@ -32,12 +32,12 @@ pipeline {
       }
       steps {
         echo '<--------------- Sonar Analysis started  --------------->'
-        //         withSonarQubeEnv('sonar-cloud') {
-        //             // sh "${scannerHome}/bin/sonar-scanner"
+                withSonarQubeEnv('sonar-cloud') {
+                    // sh "${scannerHome}/bin/sonar-scanner"
 
-        // }
+        }
         withSonarQubeEnv('sonar-cloud') {
-          sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=springboot-app'
+          sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=malibalakrishna_springbootapp'
           echo '<--------------- Sonar Analysis stopped  --------------->'
         }
       }
