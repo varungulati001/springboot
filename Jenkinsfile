@@ -41,6 +41,7 @@ pipeline {
           echo '<--------------- Sonar Analysis stopped  --------------->'
         }
       }
+    }
     // Building Docker images
     // stage('Build Docker Image') {
     //         steps {
