@@ -69,7 +69,7 @@ pipeline {
      stage('Publish to Nexus') {
             steps {
                 script {
-                    def server = Artifactory.server(http://18.206.212.197:8081, nexus)
+                    def server = Artifactory.server(18.206.212.197:8081, nexus)
                     def uploadSpec = """{
                         "files": [
                             {
