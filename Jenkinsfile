@@ -66,23 +66,25 @@ pipeline {
             }
     }
 
-     stage('Publish to Nexus') {
-            steps {
-                script {
-                    def server = Artifactory.server('http://18.206.212.197:8081', nexus)
-                    def uploadSpec = """{
-                        "files": [
-                            {
-                                "pattern": "Springbootapp/target/springbootApp.jar",
-                                "target": "maven3/com.tcs.angularjs/springbootApp/1.0/springbootApp.jar"
-                            }
-                        ]
-                    }"""
-                    server.upload(uploadSpec)
-                }
-            }
-        }
 
+stage('Upload to Nexus') {
+    steps {
+        script {
+            nexusArtifactUploader artifacts: [
+                // Define the artifacts you want to upload to Nexus
+                [artifactId: 'springbootApp', file: 'Springbootapp/target/springbootApp.jar', type: 'jar']
+                // Add more artifacts if needed
+            ],
+            credentialsId: 'nexus',
+            groupId: 'com.tcs.angularjs',
+            nexusUrl: 'http://18.206.212.197:8081',
+            nexusVersion: '3', // Adjust this to your Nexus version (2 or 3)
+            protocol: 'http', // Use 'https' if your Nexus server uses HTTPS
+            repository: 'maven3',
+            version: '1.0.0' // Replace with your desired version
+        }
+    }
+}
   //  stage('Upload to Nexus') {
   //     steps {
   //       script {
