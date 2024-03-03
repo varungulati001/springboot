@@ -70,3 +70,4 @@ stage('Upload to Nexus') {
         }
     }
 }
+}
