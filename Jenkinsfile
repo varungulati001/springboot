@@ -35,7 +35,7 @@ pipeline {
                 withSonarQubeEnv('sonar-cloud') {
                 sh "${scannerHome}/bin/sonar-scanner"
 
-        // }
+        }
         withSonarQubeEnv('sonar-cloud') {
           sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=springbootapp -Dsonar.organization=malibalakrishna -Dsonar.host.url=http://192.168.0.201:9000/ -Dsonar.login=squ_7d9728d863feff25a77d109121a8eb7937543ae0'
           echo '<--------------- Sonar Analysis stopped  --------------->'
