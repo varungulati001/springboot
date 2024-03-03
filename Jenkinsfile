@@ -34,7 +34,7 @@ pipeline {
       steps {
         echo '<--------------- Sonar Analysis started  --------------->'
                 withSonarQubeEnv('sonar-cloud') {
-                sh "${scannerHome}/bin/sonar-scanner"
+                sh "$SCANNER_HOME/bin/sonar-scanner"
 
         }
         withSonarQubeEnv('sonar-cloud') {
