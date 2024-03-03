@@ -18,13 +18,13 @@ pipeline {
             sh 'mvn clean install'           
             }
       }
-  //  stage('Unit Test') {
-  //     steps {
-  //       echo '<--------------- Unit Testing started  --------------->'
-  //       sh 'mvn surefire-report:report'
-  //       echo '<------------- Unit Testing stopped  --------------->'
-  //     }
-  //   }
+   stage('Unit Test') {
+      steps {
+        echo '<--------------- Unit Testing started  --------------->'
+        sh 'mvn surefire-report:report'
+        echo '<------------- Unit Testing stopped  --------------->'
+      }
+    }
 
   //   stage('Sonar Analysis') {
   //     environment {
