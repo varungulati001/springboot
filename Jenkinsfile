@@ -7,6 +7,7 @@ pipeline {
         registry = "923770093922.dkr.ecr.us-east-1.amazonaws.com/myrepo"
 	    SCANNER_HOME= tool 'sonar-scanner'
     }
+    stages {
    stage('Checkout from Git') {
             steps {
                 git branch: 'main', url: 'https://github.com/bkrrajmali/springbootapp.git'
@@ -27,5 +28,6 @@ pipeline {
                     junit 'target/surefire-reports/*.xml'
                 }
             }
-  }
+        }
+    }
 }
