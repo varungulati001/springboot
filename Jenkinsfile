@@ -68,6 +68,6 @@ stage('Upload to Nexus') {
             repository: 'maven3',
             version: '1.0.0' // Replace with your desired version
         }
+     }
     }
-}
 }
