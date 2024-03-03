@@ -7,13 +7,12 @@ pipeline {
         registry = "923770093922.dkr.ecr.us-east-1.amazonaws.com/myrepo"
 	    SCANNER_HOME= tool 'sonar-scanner'
     }
-   
-    stages {
-        stage('Cloning Git') {
+   stage('Checkout from Git') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/bkrrajmali/springbootapp.git']]])     
+                git branch: 'main', url: 'https://github.com/bkrrajmali/springbootapp.git'
             }
         }
+
       stage ('Build') {
           steps {
             sh 'mvn clean install'           
@@ -27,36 +26,21 @@ pipeline {
       }
     }
 
-    stage('Sonar Analysis') {
-      environment {
-        scannerHome = tool 'sonar-scanner'
-      }
-      steps {
-        echo '<--------------- Sonar Analysis started  --------------->'
-                withSonarQubeEnv('sonar-cloud') {
-                sh "$SCANNER_HOME/bin/sonar-scanner"
-
-        }
-        withSonarQubeEnv('sonar-cloud') {
-          sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=springbootapp -Dsonar.organization=malibalakrishna -Dsonar.host.url=http://192.168.0.201:9000/ -Dsonar.login=squ_7d9728d863feff25a77d109121a8eb7937543ae0'
-          echo '<--------------- Sonar Analysis stopped  --------------->'
-        }
-      }
-    }
-     stage('Quality Gate') {
-      steps {
-        script {
-          echo '<--------------- Quality Gate started  --------------->'
-          timeout(time: 1, unit: 'MINUTES') {
-            def qg = waitForQualityGate()
-            if (qg.status != 'OK') {
-              error 'Pipeline failed due to the Quality gate issue'
+   stage("Sonarqube Analysis") {
+            steps {
+                withSonarQubeEnv('sonar-server') {
+                    sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=springboot \
+                    -Dsonar.projectKey=springboot'''
+                }
             }
-          }
-          echo '<--------------- Quality Gate stopped  --------------->'
         }
-      }
-    }  
+        stage("quality gate") {
+            steps {
+                script {
+                    waitForQualityGate abortPipeline: false, credentialsId: 'Sonar-token'
+                }
+            }
+        }
     //Building Docker images
     stage('Build Docker Image') {
             steps {
