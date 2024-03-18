@@ -49,17 +49,23 @@ pipeline {
                 }
             }
     }
-   stage('Upload to Nexus') {
-      steps {
+stage('Upload to Nexus') {
+    steps {
         script {
-           echo '<--------------- War Publish Started --------------->'
-          nexusArtifactUploader artifacts: [
-            [artifactId: 'springbootApp', classifier: '', file: 'Springbootapp/target/springbootApp.jar', type: 'jar']
-            ], credentialsId: 'nexus', groupId: 'org.springframework.boot', nexusUrl: '18.206.212.197:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven', version: '1.0'
-            echo '<--------------- War Publish Ended --------------->'  
-          
+            nexusArtifactUploader artifacts: [
+                // Define the artifacts you want to upload to Nexus
+                [artifactId: 'springbootApp', file: 'Springbootapp/target/springbootApp.jar', type: 'jar']
+                // Add more artifacts if needed
+            ],
+            credentialsId: 'nexus',
+            groupId: 'org.springframework.boot',
+            nexusUrl: '18.206.212.197:8081',
+            nexusVersion: '3', // Adjust this to your Nexus version (2 or 3)
+            protocol: 'http', // Use 'https' if your Nexus server uses HTTPS
+            repository: 'maven',
+            version: '1.0.0' // Replace with your desired version
         }
-      }
-	}
+     }
+    }
     }
 }
