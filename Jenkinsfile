@@ -29,7 +29,7 @@ pipeline {
  stage("Sonarqube Analysis") {
             steps {
                 withSonarQubeEnv() {
-      sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=springbootapp"
+      sh mvn clean verify sonar:sonar -Dsonar.projectKey=springbootapp"
                 }
             }
         }
