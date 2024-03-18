@@ -26,11 +26,14 @@ pipeline {
         echo '<------------- Unit Testing stopped  --------------->'
       }
     }
-
-  withSonarQubeEnv('sonar-server') {
+ stage("Sonarqube Analysis "){
+            steps{
+ 		 withSonarQubeEnv('sonar-server') {
                     sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=springbootapp \
                     -Dsonar.projectKey=springbootapp '''
                 }
+	    }
+ }
         stage("quality gate") {
             steps {
                 script {
