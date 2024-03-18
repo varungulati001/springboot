@@ -49,5 +49,17 @@ pipeline {
                 }
             }
     }
+   stage('Upload to Nexus') {
+      steps {
+        script {
+           echo '<--------------- War Publish Started --------------->'
+          nexusArtifactUploader artifacts: [
+            [artifactId: 'springbootApp', classifier: '', file: 'Springbootapp/target/springbootApp.jar', type: 'jar']
+            ], credentialsId: 'nexus', groupId: 'org.springframework.boot', nexusUrl: '18.206.212.197:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven3', version: '1.0'
+            echo '<--------------- War Publish Ended --------------->'  
+          
+        }
+      }
+	}
     }
 }
