@@ -6,6 +6,10 @@ pipeline {
     environment {
         registry = "923770093922.dkr.ecr.us-east-1.amazonaws.com/myrepo"
 	    SCANNER_HOME= tool 'sonar-scanner'
+	NEXUS_URL = 'http://54.86.206.31:8081'
+        NEXUS_CREDENTIALS_ID = 'nexus'
+        ARTIFACT_PATH = 'nexus/content/repositories/maven'
+        REPOSITORY_NAME = 'maven'
     }
     stages {
    stage('Checkout from Git') {
