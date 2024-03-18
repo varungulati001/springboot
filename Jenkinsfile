@@ -1,3 +1,4 @@
+def registry = 'https://bala1.jfrog.io'
 pipeline {
    tools {
         maven 'Maven3'
@@ -5,11 +6,7 @@ pipeline {
     agent any
     environment {
         registry = "923770093922.dkr.ecr.us-east-1.amazonaws.com/myrepo"
-	    SCANNER_HOME= tool 'sonar-scanner'
-	NEXUS_URL = 'http://54.86.206.31:8081'
-        NEXUS_CREDENTIALS_ID = 'nexus'
-        ARTIFACT_PATH = 'nexus/content/repositories/maven'
-        REPOSITORY_NAME = 'maven'
+	 
     }
     stages {
    stage('Checkout from Git') {
@@ -53,23 +50,30 @@ pipeline {
                 }
             }
     }
-stage('Upload to Nexus') {
-    steps {
-        script {
-            nexusArtifactUploader artifacts: [
-                // Define the artifacts you want to upload to Nexus
-                [artifactId: 'springbootApp', file: 'Springbootapp/target/springbootApp.jar', type: 'jar']
-                // Add more artifacts if needed
-            ],
-            credentialsId: 'nexus',
-            groupId: 'org.springframework.boot',
-            nexusUrl: '18.206.212.197:8081/nexus',
-            nexusVersion: '3', // Adjust this to your Nexus version (2 or 3)
-            protocol: 'http', // Use 'https' if your Nexus server uses HTTPS
-            repository: 'maven',
-            version: '1.0.0' // Replace with your desired version
-        }
-     }
-    }
+stage("Jar Publish") {
+            steps {
+                script {
+                        echo '<--------------- Jar Publish Started --------------->'
+                         def server = Artifactory.newServer url:registry+"/artifactory" ,  credentialsId:"jfrogaccess"
+                         def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}";
+                         def uploadSpec = """{
+                              "files": [
+                                {
+                                  "pattern": "target/springbootApp.jar",
+                                  "target": "maven-libs-release",
+                                  "flat": "false",
+                                  "props" : "${properties}",
+                                  "exclusions": [ "*.sha1", "*.md5"]
+                                }
+                             ]
+                         }"""
+                         def buildInfo = server.upload(uploadSpec)
+                         buildInfo.env.collect()
+                         server.publishBuildInfo(buildInfo)
+                         echo '<--------------- Jar Publish Ended --------------->'  
+                
+                }
+            }   
+        }    
     }
 }
