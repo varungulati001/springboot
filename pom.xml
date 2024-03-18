@@ -22,6 +22,9 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
     </properties>
+	 <properties>
+        <sonar.sources>src/main/java,src/main/webapp</sonar.sources>
+      </properties>
  
     <dependencies>
         <dependency>
