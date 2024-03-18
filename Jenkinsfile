@@ -19,15 +19,12 @@ pipeline {
             sh 'mvn clean install'           
             }
       }
-  stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
-        }
+ stage('Unit Test') {
+      steps {
+        echo '<--------------- Unit Testing started  --------------->'
+        sh 'mvn surefire-report:report'
+        echo '<------------- Unit Testing stopped  --------------->'
+      }
+    }
     }
 }
