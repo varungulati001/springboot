@@ -26,10 +26,12 @@ pipeline {
         echo '<------------- Unit Testing stopped  --------------->'
       }
     }
- stage("Sonarqube Analysis") {
+
+   stage("Sonarqube Analysis") {
             steps {
-                withSonarQubeEnv() {
-      sh mvn clean verify sonar:sonar -Dsonar.projectKey=springbootapp"
+                withSonarQubeEnv('sonar-server') {
+                    sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=springboot \
+                    -Dsonar.projectKey=springboot'''
                 }
             }
         }
