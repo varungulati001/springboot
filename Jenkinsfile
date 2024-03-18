@@ -28,16 +28,15 @@ pipeline {
     }
  stage("Sonarqube Analysis") {
             steps {
-                withSonarQubeEnv('sonar-server') {
-                    sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=springboot \
-                    -Dsonar.projectKey=springboot'''
+                withSonarQubeEnv() {
+      sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=springbootapp"
                 }
             }
         }
         stage("quality gate") {
             steps {
                 script {
-                    waitForQualityGate abortPipeline: false, credentialsId: 'Sonar-token'
+                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar'
                 }
             }
         }
