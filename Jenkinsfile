@@ -27,14 +27,10 @@ pipeline {
       }
     }
 
-   stage("Sonarqube Analysis") {
-            steps {
-                withSonarQubeEnv('sonar-server') {
-                   mvn clean install sonar:sonar -Dsonar.projectKey=groupId:artifactId -Dsonar.sources=src/main/java/ -Dsonar.java.binaries=target/classes
-
+  withSonarQubeEnv('sonar-server') {
+                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=springbootapp \
+                    -Dsonar.projectKey=springbootapp '''
                 }
-            }
-        }
         stage("quality gate") {
             steps {
                 script {
