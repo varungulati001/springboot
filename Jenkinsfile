@@ -3,9 +3,9 @@ pipeline {
         maven "Maven3"
     }
     agent any
-        environment (
+        environment {
             SCANNER_HOME= tool 'sonar-scanner'
-        )
+        }
     
         stages {
             stage ('Checkout from git'){
@@ -25,7 +25,7 @@ pipeline {
                 echo '<----------------------Unit Test Done------------------>'
             }
         }
-        stage ('Sonarqube analysis')
+        stage ('Sonarqube analysis'){
             steps {
                 script {
                     withSonarQubeEnv('sonar-server') {
@@ -34,5 +34,6 @@ pipeline {
                     }
                 }
             }
+        }
     }
 }
