@@ -8,8 +8,11 @@ pipeline {
             stage ('Checkout from git'){
                 steps {
                     git branch: 'main', url: 'https://github.com/bkrrajmali/springbootapp.git'
-                }
             }
-
+        }
+        stage ('Maven Build'){
+                steps {
+                   sh 'mvn clean install'
+            } 
         }
 }
