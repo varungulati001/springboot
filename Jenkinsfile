@@ -42,11 +42,12 @@ pipeline {
                 }
             }
         }
-        stage ('Build Docker Image')
+        stage ('Build Docker Image'){
             steps {
                 script {
                     sh 'docker build -t myrepo .'
                 }
             }
+        }    
     }
 }
