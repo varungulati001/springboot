@@ -3,7 +3,7 @@ pipeline {
         maven "Maven3"
     }
     agent any
-    {
+    
         stages {
             stage ('Checkout from git'){
                 steps {
@@ -12,5 +12,4 @@ pipeline {
             }
 
         }
-    }
 }
