@@ -90,7 +90,7 @@ pipeline {
     stage('Kuberernetes Deployment'){
         steps{
             script {
-                sh 'aws eks --region us-east-2 update-kubeconfig --name my-first-eks-cluster'
+                sh 'aws eks --region us-east-1 update-kubeconfig --name my-first-eks-cluster'
                 sh 'kubectl apply -f eks-deply-k8s.yaml'
             }
         }
