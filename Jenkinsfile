@@ -81,7 +81,7 @@ pipeline {
             script {
                 sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 037500517393.dkr.ecr.us-east-1.amazonaws.com'
                 //sh 'docker build -t ncplrepo .'
-                sh 'docker tag ncplrepo:latest 037500517393.dkr.ecr.us-east-1.amazonaws.com/ncplrepo:latest'
+                sh 'docker tag myrepo:latest 037500517393.dkr.ecr.us-east-1.amazonaws.com/ncplrepo:latest'
                 sh 'docker push 037500517393.dkr.ecr.us-east-1.amazonaws.com/ncplrepo:latest'
 
             }
