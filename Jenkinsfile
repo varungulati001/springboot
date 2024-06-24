@@ -21,7 +21,7 @@ pipeline {
         }
         stage ('Unit Test'){
             steps {
-                echo '<----------------------Unit Test Under Progess------------------>'
+                echo '<----------------------Unit Test Under Progess ------------------>'
                 sh 'mvn surefire-report:report'
                 echo '<----------------------Unit Test Done------------------>'
             }
