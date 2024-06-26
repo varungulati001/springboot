@@ -21,5 +21,16 @@ pipeline {
                     echo '<----------------------Unit Test Done------------------>'
                 }
             }
+            stage ('Sonarqube analysis'){
+            steps {
+                script {
+                    withSonarQubeEnv('sonar-server') {
+                        sh  ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=springbootapp \
+                        -Dsonar.projectKey=springbootapp '''
+                    }
+                }
+            }
+        }
+
         }
     }
