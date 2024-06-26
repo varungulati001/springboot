@@ -13,6 +13,7 @@ pipeline {
                 steps {
                     sh 'mvn clean install'
                 }
+            }
             stage ('Unit Test'){
                 steps {
                     echo '<----------------------Unit Test Under Progess ------------------>'
@@ -22,4 +23,3 @@ pipeline {
             }
         }
     }
-}
