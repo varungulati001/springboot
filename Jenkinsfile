@@ -1,5 +1,5 @@
 pipeline {
-    agent any {
+    agent any 
         stages {
             stage ("Checkout From Git") {
                 steps {
@@ -8,4 +8,3 @@ pipeline {
             }
         }
     }
-}
