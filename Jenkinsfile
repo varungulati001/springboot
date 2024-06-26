@@ -5,7 +5,7 @@ pipeline {
     agent any 
     environment {
             SCANNER_HOME= tool 'sonar-scanner'
-    }
+            }
         stages {
             stage ("Checkout From Git") {
                 steps {
@@ -27,9 +27,8 @@ pipeline {
             stage ('Sonarqube analysis'){
             steps {
                 script {
-                    withSonarQubeEnv('sonar-scanner') {
-                        sh  ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=springbootapp \
-                        -Dsonar.projectKey=springbootapp '''
+                    (credentialsId: 'sonar') {
+                    sh 'mvn clean package sonar:sonar'
                     }
                 }
             }
