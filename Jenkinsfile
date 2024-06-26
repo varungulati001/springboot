@@ -27,9 +27,10 @@ pipeline {
             stage ('Sonarqube analysis'){
             steps {
                 script {
-                    withSonarQubeEnv(credentialsId: 'sonar') {
-                    sh 'mvn clean package sonar:sonar'
-                }
+               withSonarQubeEnv('sonar-server') {
+                        sh  ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=springbootapp \
+                        -Dsonar.projectKey=springbootapp '''
+                    }
                 }
             }
         }
