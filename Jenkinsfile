@@ -29,7 +29,7 @@ pipeline {
                 script {
                withSonarQubeEnv('sonar-server') {
                         sh  ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=springbootapp \
-                        -Dsonar.projectKey=springbootapp '''
+                        -Dsonar.projectKey=bkrrajmali_springbootapp '''
                     }
                 }
             }
