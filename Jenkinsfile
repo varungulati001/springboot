@@ -3,6 +3,9 @@ pipeline {
         maven "Maven3"
     }
     agent any
+    environment {
+        SCANNER_HOME= tool 'sonar-scanner'
+    }
     stages {
         stage('Checkout From Git') {
             steps {
@@ -19,6 +22,15 @@ pipeline {
                 echo '<----------------------Unit Test Under Progess-------------------->'
                 sh 'mvn surefire-report:report'
                 echo '<----------------------Unit Test Finished------------------------->'
+            }
+        }
+        stage('SonarQube Analysis') {
+            steps {
+               script {
+                withSonarQubeEnv('sonar-server') {
+                sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=springbootapp -Dsonar.projectKey=bkrrajmali_springbootapp '''
+                }
+               }
             }
         }
     }
