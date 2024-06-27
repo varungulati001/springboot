@@ -4,7 +4,7 @@ pipeline {
     }
     agent any 
         environment {
-            SCANNER_HOME= toll 'sonar-scanner'
+            SCANNER_HOME= tool 'sonar-scanner'
         }
     stages {
         stage ('Checkout from Git') {
