@@ -33,7 +33,7 @@ pipeline {
                 }
             }
         }
-        Stage ('Quality GAte Test') {
+        stage ('Quality GAte Test') {
             steps {
                 script {
                     waitForQualityGate abortPipeline: false, credentialsId: 'sonar'
