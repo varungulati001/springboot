@@ -69,6 +69,7 @@ pipeline {
         stage ('Build Docker Image'){
             steps {
                 script {
+                    sh 'sudo usermod -aG docker $USER'
                     sh 'docker build -t myrepo .'
                 }
             }
