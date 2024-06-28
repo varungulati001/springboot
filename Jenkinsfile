@@ -73,5 +73,14 @@ pipeline {
         }
       }
     }  
+    stage ('Push Docker Image') {
+        steps {
+            script {
+                sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 656952365822.dkr.ecr.us-east-1.amazonaws.com'
+                sh 'docker tag myrepo:latest 656952365822.dkr.ecr.us-east-1.amazonaws.com/ncplrepo:latest'
+                sh 'docker push 656952365822.dkr.ecr.us-east-1.amazonaws.com/ncplrepo:latest'
+            }
+        }
+    }
     }
 }
