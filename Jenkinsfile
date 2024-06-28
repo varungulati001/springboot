@@ -1,4 +1,4 @@
-def registry  ='https://ncplspringboot.jfrog.io'
+//def registry  ='https://ncplspringboot.jfrog.io'
 pipeline {
     tools {
         maven "Maven3"
@@ -41,4 +41,5 @@ pipeline {
             }
         }
       }
-      
+    }
+}
